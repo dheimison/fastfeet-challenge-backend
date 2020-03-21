@@ -5,12 +5,7 @@
 <p>Este desafio está disponível no repositório da <a href="https://github.com/Rocketseat">RocketSeat</a>, ele basicamente consiste em criar uma aplicação completa (Back-end, Front-end e Mobile) do zero usando Node.js, ReactJS e React Native</p>
 
 <p align="center">
-  <a href="https://rocketseat.com.br">
-    <img alt="Made by Rocketseat" src="https://img.shields.io/badge/made%20by-Rocketseat-%2304D361">
-  </a>
-
   <img alt="License" src="https://img.shields.io/badge/license-MIT-%2304D361">
-
 </p>
 
 ## :rocket: Sobre o desafio
