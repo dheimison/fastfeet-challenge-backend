@@ -1,3 +1,4 @@
+import * as Yup from 'yup';
 import fs from 'fs';
 import { resolve } from 'path';
 
@@ -20,6 +21,17 @@ class DeliverymanController {
   }
 
   async store(req, res) {
+    const schema = Yup.object().shape({
+      name: Yup.string().required(),
+      email: Yup.string()
+        .email()
+        .required(),
+    });
+
+    if (!(await schema.isValid(req.query))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
     const { name, email } = req.query;
 
     const deliverymanExists = await Deliveryman.findOne({
@@ -56,6 +68,15 @@ class DeliverymanController {
   }
 
   async update(req, res) {
+    const schema = Yup.object().shape({
+      name: Yup.string(),
+      email: Yup.string().email(),
+    });
+
+    if (!(await schema.isValid(req.query))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
     const { email } = req.query;
 
     const deliveryman = await Deliveryman.findByPk(req.params.id);
@@ -82,6 +103,18 @@ class DeliverymanController {
       });
 
       if (avatar) {
+        const filePath = resolve(
+          __dirname,
+          '..',
+          '..',
+          '..',
+          'tmp',
+          'uploads',
+          `${avatar.path}`
+        );
+
+        fs.unlinkSync(filePath);
+
         const { url } = await avatar.update({
           name: originalname,
           path,
@@ -112,6 +145,14 @@ class DeliverymanController {
   }
 
   async delete(req, res) {
+    const schema = Yup.object().shape({
+      id: Yup.number().required(),
+    });
+
+    if (!(await schema.isValid(req.params))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
     const deliveryman = await Deliveryman.findByPk(req.params.id, {
       attributes: ['id', 'name', 'email', 'avatar_id'],
     });
