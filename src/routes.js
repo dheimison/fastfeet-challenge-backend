@@ -25,5 +25,6 @@ routes.put(
   upload.single('file'),
   DeliverymanController.update
 );
+routes.delete('/deliverymen/:id', DeliverymanController.delete);
 
 export default routes;

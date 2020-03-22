@@ -1,3 +1,6 @@
+import fs from 'fs';
+import { resolve } from 'path';
+
 import Deliveryman from '../models/Deliveryman';
 import File from '../models/File';
 
@@ -55,9 +58,7 @@ class DeliverymanController {
   async update(req, res) {
     const { email } = req.query;
 
-    const deliveryman = await Deliveryman.findOne({
-      where: { id: req.params.id },
-    });
+    const deliveryman = await Deliveryman.findByPk(req.params.id);
 
     if (!deliveryman) {
       return res.status(404).json({ error: 'Delivery man does not exists' });
@@ -108,6 +109,36 @@ class DeliverymanController {
     const { id, name } = await deliveryman.update(req.query);
 
     return res.status(200).json({ id, name, email });
+  }
+
+  async delete(req, res) {
+    const deliveryman = await Deliveryman.findByPk(req.params.id, {
+      attributes: ['id', 'name', 'email', 'avatar_id'],
+    });
+
+    if (!deliveryman) {
+      return res.status(404).json({ error: 'Delivery man does not exists' });
+    }
+
+    if (deliveryman.avatar_id) {
+      const avatar = await File.findByPk(deliveryman.avatar_id);
+      const filePath = resolve(
+        __dirname,
+        '..',
+        '..',
+        '..',
+        'tmp',
+        'uploads',
+        `${avatar.path}`
+      );
+
+      fs.unlinkSync(filePath);
+      avatar.destroy();
+    }
+
+    await deliveryman.destroy();
+
+    return res.status(200).json({ Success: 'Delivery man deleted' });
   }
 }
 
