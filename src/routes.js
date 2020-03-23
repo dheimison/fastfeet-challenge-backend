@@ -5,6 +5,7 @@ import multerConfig from './config/multer';
 import SessionController from './app/controllers/SessionController';
 import RecipientController from './app/controllers/RecipientController';
 import DeliverymanController from './app/controllers/DeliverymanController';
+import OrderController from './app/controllers/OrderController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -26,5 +27,7 @@ routes.put(
   DeliverymanController.update
 );
 routes.delete('/deliverymen/:id', DeliverymanController.delete);
+
+routes.post('/orders', OrderController.store);
 
 export default routes;
