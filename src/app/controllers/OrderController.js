@@ -41,8 +41,8 @@ class OrderController {
 
   async store(req, res) {
     const schema = Yup.object().shape({
-      recipient: Yup.number().required(),
-      deliveryman: Yup.number().required(),
+      recipient_id: Yup.number().required(),
+      deliveryman_id: Yup.number().required(),
       product: Yup.string().required(),
     });
 
@@ -50,11 +50,7 @@ class OrderController {
       return res.status(400).json({ error: 'Validations fails' });
     }
 
-    const {
-      recipient: recipient_id,
-      deliveryman: deliveryman_id,
-      product,
-    } = req.body;
+    const { recipient_id, deliveryman_id, product } = req.body;
 
     const deliveryman = await Deliveryman.findByPk(deliveryman_id);
     const recipient = await Recipient.findByPk(recipient_id);
@@ -77,6 +73,50 @@ class OrderController {
     });
 
     return res.status(200).json(newOrder);
+  }
+
+  async update(req, res) {
+    const schema = Yup.object().shape({
+      recipient_id: Yup.number(),
+      deliveryman_id: Yup.number(),
+      product: Yup.string(),
+    });
+
+    const { deliveryman_id, recipient_id } = req.body;
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validations fails' });
+    }
+
+    if (!req.params.id) {
+      return res.status(400).json({ error: 'Please enter the ID' });
+    }
+
+    const order = await Order.findByPk(req.params.id);
+
+    if (!order) {
+      return res.status(404).json({ error: 'Order does not exist' });
+    }
+
+    if (recipient_id) {
+      const recipientExists = await Recipient.findByPk(recipient_id);
+
+      if (!recipientExists) {
+        return res.status(404).json({ error: 'Recipient does not exist' });
+      }
+    }
+
+    if (deliveryman_id) {
+      const deliverymanExists = await Deliveryman.findByPk(deliveryman_id);
+
+      if (!deliverymanExists) {
+        return res.status(404).json({ error: 'Delivery man does not exist' });
+      }
+    }
+
+    await order.update(req.body);
+
+    return res.status(200).json({ Sucess: 'The order has been updated' });
   }
 }
 
