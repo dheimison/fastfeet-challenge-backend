@@ -28,7 +28,7 @@ O usuário administrador pode se autenticar usando email e senha.
 
 Ao se autenticar o usuário recebe um token de acesso gerado via JSON Web Token, que será necessario para poder acessar alguma funcionalidades da aplicação.
 
-- Rota de autenticação: `POST http://localhost:3000/sessions`
+- Rota de autenticação: `POST http://localhost:3333/sessions`
   - Exemplo de campos a serem enviados:
   <pre><code>
   {
@@ -47,7 +47,7 @@ O cadastro de destinatários só pode ser feito por administradores autenticados
 
 O destinatário não pode se autenticar no sistema.
 
-- Rota de cadastro de destinatários: `POST http://localhost:3000/recipients`
+- Rota de cadastro de destinatários: `POST http://localhost:3333/recipients`
   - Exemplo de campos a serem enviados:
     <pre><code>
     {
@@ -61,7 +61,7 @@ O destinatário não pode se autenticar no sistema.
     }
     </code></pre>
 
-- Rota de atualização dos dados de destinatários: `PUT http://localhost:3000/recipients`
+- Rota de atualização dos dados de destinatários: `PUT http://localhost:3333/recipients`
   - Exemplo de campos a serem enviados:
   <pre><code>
   {
