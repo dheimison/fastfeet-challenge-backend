@@ -1,4 +1,7 @@
 import * as Yup from 'yup';
+import fs from 'fs';
+import { resolve } from 'path';
+
 import Order from '../models/Order';
 import Deliveryman from '../models/Deliveryman';
 import Recipient from '../models/Recipient';
@@ -117,6 +120,38 @@ class OrderController {
     await order.update(req.body);
 
     return res.status(200).json({ Sucess: 'The order has been updated' });
+  }
+
+  async delete(req, res) {
+    if (!req.params.id) {
+      return res.status(400).json({ error: 'Please enter the ID' });
+    }
+
+    const order = await Order.findByPk(req.params.id);
+
+    if (!order) {
+      return res.status(404).json({ error: 'Order does not exist' });
+    }
+
+    if (order.signature_id) {
+      const signature = await File.findByPk(order.signature_id);
+
+      const filePath = resolve(
+        __dirname,
+        '..',
+        '..',
+        '..',
+        'tmp',
+        'uploads',
+        `${signature.path}`
+      );
+
+      fs.unlinkSync(filePath);
+      signature.destroy();
+    }
+    await order.destroy();
+
+    return res.status(200).json({ Sucess: 'Order deleted' });
   }
 }
 
