@@ -56,7 +56,16 @@ class OrderController {
     const { recipient_id, deliveryman_id, product } = req.body;
 
     const deliveryman = await Deliveryman.findByPk(deliveryman_id);
+
     const recipient = await Recipient.findByPk(recipient_id);
+
+    if (!recipient) {
+      return res.status(400).json({ error: 'Recipient man does not exist' });
+    }
+
+    if (!deliveryman) {
+      return res.status(400).json({ error: 'Delivery man does not exist' });
+    }
 
     Mail.sendMail({
       to: `${deliveryman.name} <${deliveryman.email}>`,
