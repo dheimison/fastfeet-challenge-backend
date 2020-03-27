@@ -7,6 +7,7 @@ import RecipientController from './app/controllers/RecipientController';
 import DeliverymanController from './app/controllers/DeliverymanController';
 import OrderController from './app/controllers/OrderController';
 import DeliveryController from './app/controllers/DeliveryController';
+import DeliveryProblemController from './app/controllers/DeliveryProblemController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -23,6 +24,8 @@ routes.put(
   upload.single('file'),
   DeliveryController.update
 );
+
+routes.get('/delivery/:id/problems', DeliveryProblemController.show);
 
 routes.use(authMiddleware);
 
@@ -42,5 +45,7 @@ routes.get('/orders', OrderController.index);
 routes.post('/orders', OrderController.store);
 routes.put('/orders/:id', OrderController.update);
 routes.delete('/orders/:id', OrderController.delete);
+
+routes.get('/delivery', DeliveryProblemController.index);
 
 export default routes;
