@@ -35,13 +35,15 @@ Ao se autenticar o usuário recebe um token de acesso gerado via JSON Web Token,
 - Rota de autenticação: `POST http://localhost:3333/sessions`
   - Exemplo de campos a serem enviados:
   <pre><code>
-  {
-  		"email": "admin@fastfeet.com",
-  		"password": "123456"
-  }
+    {
+      "email": "admin@fastfeet.com",
+      "password": "123456"
+    }
   </code></pre>
 
 ### **2. Gestão de Destinatários**
+
+Para realizar todas as operações abaixo o administrador deve enviar o seu **Bearer token** para confirmar que está autenticado no sistema.
 
 Os destinatários são mantidos (cadastrados/atualizados) na aplicação, e esses destinatários contém **nome** e campos de endereço: **rua**, **número**, **complemento**, **estado**, **cidade** e **CEP**.
 
@@ -81,13 +83,15 @@ O destinatário não pode se autenticar no sistema.
 
 ### **3. Gestão de Entregadores**
 
-**Listagem de entregadores**
+Para realizar todas as operações abaixo o administrador deve enviar o seu **Bearer token** para confirmar que está autenticado no sistema.
+
+**Listagem de entregadores:**
 
 Administradores podem listar todos os entregadores usando a seguinte rota:
 
 - `GET http://localhost:3333/deliverymen`
 
-**Cadastro de entregadores**
+**Cadastro de entregadores:**
 
 Administradores podem cadastrar novos entregadores usando a seguinte rota, o nome e o email devem ser passados via `Query params`, a foto do entregador pode ser enviado no corpo da requisição que deve ser do tipo `Multipart Form` e o nome do campo a ser enviado deve ser `file`:
 
@@ -95,7 +99,7 @@ Administradores podem cadastrar novos entregadores usando a seguinte rota, o nom
 
 - O corpo da requisição dever ser do tipo `Multipart Form` e deve conter o campo `file` junto de um arquivo de imagem.
 
-**Atualização de entregadores**
+**Atualização de entregadores:**
 
 Administradores podem atualizar os dados entregadores informando o **ID** do entregador usando a seguinte rota:
 
@@ -116,7 +120,7 @@ Para atualizar apenas a foto, exemplo usando id = 1:
 
 - O corpo da requisição dever ser do tipo `Multipart Form` e deve conter o campo `file` junto de um arquivo de imagem.
 
-**Deletar entregadores**
+**Deletar entregadores:**
 
 Administradores podem deletar entregadores da base de dados usando a seguinte rota:
 
@@ -125,3 +129,71 @@ Administradores podem deletar entregadores da base de dados usando a seguinte ro
 Exemplo usando o id = 1
 
 - `DELETE http://localhost:3333/deliverymen/1`
+
+### **3. Gestão de Encomendas**
+
+Para realizar todas as operações abaixo o administrador deve enviar o seu **Bearer token** para confirmar que está autenticado no sistema.
+
+**Listagem todas as encomendas:**
+
+Administradores podem listar todas as encomendas usando a seguinte rota:
+
+- Rota: `GET http://localhost:3333/orders`
+
+- Ela retornará um array de encomendas.
+
+**Cadastro de encomendas:**
+
+Administradores podem cadastrar novas encomendas usando a seguinte rota:
+
+- Rota: `POST http://localhost:3333/orders`
+
+- É obrigatório o envio do id do destinatário.
+
+- É obrigatório o envio do id do entregador.
+
+- É obrigatório o envio do nome do produto a ser entregue.
+
+- Exemplo de corpo da requisição a ser enviado:
+<pre><code>
+   {
+     "recipient_id": "2",
+     "deliveryman_id": "1",
+     "product": "Caixa de som"
+   }
+</code></pre>
+
+Quando a encomenda é cadastrada para um entregador, o entregador recebe um e-mail com detalhes da encomenda, com nome do produto e uma mensagem informando-o que o produto já está disponível para a retirada
+
+**Atualização de encomendas:**
+
+Administradores podem atualizar as encomendas usando a seguinte rota:
+
+- Rota: `PUT http://localhost:3333/orders/id`
+
+- É obrigatório enviar o id da encomenda a ser atualizada.
+
+- Todos os campos da requisição são opcionais.
+
+- Exemplo da requisição e dos campos a serem enviados:
+<br>
+`PUT http://localhost:3333/orders/1`
+<pre><code>
+{
+	"recipient_id": "1",
+	"deliveryman_id": "2",
+	"product": "Caixa vazia"
+}
+</code></pre>
+
+**Deletar encomendas:**
+
+Administradores podem deletar encomendas usando a seguinte rota:
+
+- Rota: `DELETE http://localhost:3333/orders/id`
+
+- É obrigatório enviar o id da encomenda a ser deletada.
+
+- Exemplo da requisição a ser enviada:
+  <br>
+  `DELETE http://localhost:3333/orders/1`
