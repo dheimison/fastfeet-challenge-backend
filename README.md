@@ -81,37 +81,47 @@ O destinatário não pode se autenticar no sistema.
 
 ### **3. Gestão de Entregadores**
 
-**Listagem**
+**Listagem de entregadores**
 
 Administradores podem listar todos os entregadores usando a seguinte rota:
 
 - `GET http://localhost:3333/deliverymen`
 
-**Cadastro**
+**Cadastro de entregadores**
 
-Administradores podem cadastrar novos entregadores usando a seguinte rota, o nome e o email devem ser passados via `Query params`, a foto do entregador pode ser enviado no corpo da requisição que deve ser do tipo `Multipart form` o nome do campo a ser enviado deve ser `file`:
+Administradores podem cadastrar novos entregadores usando a seguinte rota, o nome e o email devem ser passados via `Query params`, a foto do entregador pode ser enviado no corpo da requisição que deve ser do tipo `Multipart Form` e o nome do campo a ser enviado deve ser `file`:
 
 - Rota: `POST http://localhost:3333/deliverymen?name=NomeDoEntregador&email=email@email.com`
-  - exemplo do corpo da requisição a ser enviado:
-  <pre><code>  
-    Content-Type: multipart/form-data;
-    Content-Disposition: form-data; name="file"; filename="images.jpeg"
-    Content-Type: image/jpeg
-  </code></pre>
 
-**Atualização**
+- O corpo da requisição dever ser do tipo `Multipart Form` e deve conter o campo `file` junto de um arquivo de imagem.
+
+**Atualização de entregadores**
 
 Administradores podem atualizar os dados entregadores informando o **ID** do entregador usando a seguinte rota:
 
-- Rota: `PUT http://localhost:3333/deliverymen/1`
+- Rota: `PUT http://localhost:3333/deliverymen/id`
   <br>
 
-Para atualizar apenas o nome:
+Para atualizar apenas o nome, exemplo usando id = 1:
 
 - Rota: `PUT http://localhost:3333/deliverymen/1?name=NomeNovo`
-  - exemplo do corpo da requisição a ser enviado:
-  <pre><code>  
-    Content-Type: multipart/form-data;
-    Content-Disposition: form-data; name="file"; filename="images.jpeg"
-    Content-Type: image/jpeg
-  </code></pre>
+
+Para atualizar apenas o email, exemplo usando id = 1:
+
+- Rota: `PUT http://localhost:3333/deliverymen/1?email=EmailNovo@email.com`
+
+Para atualizar apenas a foto, exemplo usando id = 1:
+
+- Rota `PUT http://localhost:3333/deliverymen/1`
+
+- O corpo da requisição dever ser do tipo `Multipart Form` e deve conter o campo `file` junto de um arquivo de imagem.
+
+**Deletar entregadores**
+
+Administradores podem deletar entregadores da base de dados usando a seguinte rota:
+
+- `DELETE http://localhost:3333/deliverymen/id`
+
+Exemplo usando o id = 1
+
+- `DELETE http://localhost:3333/deliverymen/1`
