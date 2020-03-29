@@ -9,9 +9,11 @@
 </p>
 
 ## :rocket: Sobre o desafio
+
 A aplicação é um app para uma transportadora fictícia, o FastFeet.
 
 ### **Ferramentas e tecnologias usadas no backend :**
+
 - Node.js + Express;
 - Sucrase + Nodemon;
 - Sequelize;
@@ -21,9 +23,11 @@ A aplicação é um app para uma transportadora fictícia, o FastFeet.
 - Yup;
 
 ### **Funcionalidades**
+
 Abaixo estão descritas as funcionalidades contidas na aplicação.
 
 ### **1. Autenticação**
+
 O usuário administrador pode se autenticar usando email e senha.
 
 Ao se autenticar o usuário recebe um token de acesso gerado via JSON Web Token, que será necessario para poder acessar alguma funcionalidades da aplicação.
@@ -32,10 +36,10 @@ Ao se autenticar o usuário recebe um token de acesso gerado via JSON Web Token,
   - Exemplo de campos a serem enviados:
   <pre><code>
   {
-	"email": "admin@fastfeet.com",
-	"password": "123456"
+  		"email": "admin@fastfeet.com",
+  		"password": "123456"
   }
-  </code></pre> 
+  </code></pre>
 
 ### **2. Gestão de Destinatários**
 
@@ -48,6 +52,7 @@ O cadastro de destinatários só pode ser feito por administradores autenticados
 O destinatário não pode se autenticar no sistema.
 
 - Rota de cadastro de destinatários: `POST http://localhost:3333/recipients`
+
   - Exemplo de campos a serem enviados:
     <pre><code>
     {
@@ -62,14 +67,51 @@ O destinatário não pode se autenticar no sistema.
     </code></pre>
 
 - Rota de atualização dos dados de destinatários: `PUT http://localhost:3333/recipients`
+
   - Exemplo de campos a serem enviados:
-  <pre><code>
-  {
-    "currentName": "Nome atual do destinatário",
-    "street": "Rua nova"
-  }
-  </code></pre>
-  Obs.1: o campo `currentName` é obrigatório, todos os outros campos são opcionais e seguem a mesma estrutura do exemplo de cadastro de destinatários.
+    <pre><code>
+    {
+      "currentName": "Nome atual do destinatário",
+      "street": "Rua nova"
+    }
+    </code></pre>
+    Obs.1: o campo `currentName` é obrigatório, todos os outros campos são opcionais e seguem a mesma estrutura do exemplo de cadastro de destinatários.
 
   Obs.2: Para atualizar o nome do destinatário adicione um campo chamado `newName`.
 
+### **3. Gestão de Entregadores**
+
+**Listagem**
+
+Administradores podem listar todos os entregadores usando a seguinte rota:
+
+- `GET http://localhost:3333/deliverymen`
+
+**Cadastro**
+
+Administradores podem cadastrar novos entregadores usando a seguinte rota, o nome e o email devem ser passados via `Query params`, a foto do entregador pode ser enviado no corpo da requisição que deve ser do tipo `Multipart form` o nome do campo a ser enviado deve ser `file`:
+
+- Rota: `POST http://localhost:3333/deliverymen?name=NomeDoEntregador&email=email@email.com`
+  - exemplo do corpo da requisição a ser enviado:
+  <pre><code>  
+    Content-Type: multipart/form-data;
+    Content-Disposition: form-data; name="file"; filename="images.jpeg"
+    Content-Type: image/jpeg
+  </code></pre>
+
+**Atualização**
+
+Administradores podem atualizar os dados entregadores informando o **ID** do entregador usando a seguinte rota:
+
+- Rota: `PUT http://localhost:3333/deliverymen/1`
+  <br>
+
+Para atualizar apenas o nome:
+
+- Rota: `PUT http://localhost:3333/deliverymen/1?name=NomeNovo`
+  - exemplo do corpo da requisição a ser enviado:
+  <pre><code>  
+    Content-Type: multipart/form-data;
+    Content-Disposition: form-data; name="file"; filename="images.jpeg"
+    Content-Type: image/jpeg
+  </code></pre>
