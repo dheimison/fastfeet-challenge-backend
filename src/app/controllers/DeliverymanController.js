@@ -26,11 +26,11 @@ class DeliverymanController {
       email: Yup.string().email().required(),
     });
 
-    if (!(await schema.isValid(req.query))) {
+    if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    const { name, email } = req.query;
+    const { name, email } = req.body;
 
     const deliverymanExists = await Deliveryman.findOne({
       where: { email },
@@ -71,11 +71,11 @@ class DeliverymanController {
       email: Yup.string().email(),
     });
 
-    if (!(await schema.isValid(req.query))) {
+    if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    const { email } = req.query;
+    const { email } = req.body;
 
     const deliveryman = await Deliveryman.findByPk(req.params.id);
 
@@ -118,7 +118,7 @@ class DeliverymanController {
           path,
         });
 
-        const { id, name } = await deliveryman.update(req.query);
+        const { id, name } = await deliveryman.update(req.body);
 
         return res.status(200).json({ id, name, email, url });
       }
@@ -129,7 +129,7 @@ class DeliverymanController {
       });
 
       const { id, name } = await deliveryman.update({
-        name: req.query.name,
+        name: req.body.name,
         email,
         avatar_id: file.id,
       });
@@ -137,7 +137,7 @@ class DeliverymanController {
       return res.status(200).json({ id, name, email, url: file.url });
     }
 
-    const { id, name } = await deliveryman.update(req.query);
+    const { id, name } = await deliveryman.update(req.body);
 
     return res.status(200).json({ id, name, email });
   }
