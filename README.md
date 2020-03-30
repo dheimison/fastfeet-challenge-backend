@@ -130,7 +130,7 @@ Exemplo usando o id = 1
 
 - `DELETE http://localhost:3333/deliverymen/1`
 
-### **3. Gestão de Encomendas**
+### **4. Gestão de Encomendas**
 
 Para realizar todas as operações abaixo o administrador deve enviar o seu **Bearer token** para confirmar que está autenticado no sistema.
 
@@ -176,15 +176,15 @@ Administradores podem atualizar as encomendas usando a seguinte rota:
 - Todos os campos da requisição são opcionais.
 
 - Exemplo da requisição e dos campos a serem enviados:
-<br>
-`PUT http://localhost:3333/orders/1`
-<pre><code>
-{
-	"recipient_id": "1",
-	"deliveryman_id": "2",
-	"product": "Caixa vazia"
-}
-</code></pre>
+  <br>
+  <pre><code>PUT http://localhost:3333/orders/1</code></pre>
+  <pre><code>
+    {
+      "recipient_id": "1",
+      "deliveryman_id": "2",
+      "product": "Caixa vazia"
+    }
+  </code></pre>
 
 **Deletar encomendas:**
 
@@ -197,3 +197,125 @@ Administradores podem deletar encomendas usando a seguinte rota:
 - Exemplo da requisição a ser enviada:
   <br>
   `DELETE http://localhost:3333/orders/1`
+
+### **5. Funcionalidades do entregador**
+
+**Visualizar encomendas:**
+
+O entregador pode visualizar as encomendas disponíveis para ele entregar informando apenas o seu id.
+
+- Exemplo de requisição:
+  <br>
+  `GET http://localhost:3333/deliveries/id`
+  <br>
+
+- Exemplo de requisição usando id = 1:
+  <br>
+  `GET http://localhost:3333/deliveries/1`
+
+**Visualizar encomendas já entregues:**
+
+O entregador pode visualizar as encomendas que já foram entregues por ele usando a seguinte rota:
+
+- Exemplo de requisição:
+  <br>
+  `GET http://localhost:3333/deliveries/id/completed`
+
+- Exemplo de requisição usando id = 1:
+  <br>
+  `GET http://localhost:3333/deliveries/1/completed`
+
+**Retirar uma encomenda para entregar**
+
+O entregador pode iniciar a entrega de uma encomenda usando a seguinte rota:
+
+- Exemplo de requisição:
+  <br>
+  `POST http://localhost:3333/deliveries/take`
+
+- É **obrigatório** enviar os campos informando o id do entregador e o id da encomenda.
+
+- Exemplo de campos a serem enviados no corpo da requisição:
+<pre><code>
+{
+	"deliveryman_id": "1",
+	"order_id": "2"
+}
+</code></pre>
+
+- O entregador só pode fazer **5 retiradas por dia** e as retiradas só podem ser feitas entre as **08:00 e 18:00h**.
+
+**Finalizar uma entrega:**
+
+O entregador pode finalizar uma entrega usando a seguinte rota:
+
+- Exemplo de requisição:
+  <br>
+  `PUT http://localhost:3333/deliveries/id/conclude?order=order-id`
+
+- Exemplo de requisição usando id do entregador = 1 e id da encomenda = 2:
+  <br>
+  `PUT http://localhost:3333/deliveries/1/conclude?order=2`
+
+- O entregador deve enviar uma foto da assinatura do destinatário para comprovar que recebeu a encomenda.
+
+- A foto da assinatura vai no corpo da requisição, o corpo da requisição deve ser do tipo `Multipart Form` e o campo a ser enviado junto com a foto deve se chamar `file`.
+
+**Cadastrar problemas na entrega:**
+
+O entregador pode cadastrar um problema na entrega usando a seguinte rota:
+
+- Exemplo de requisição:
+  <br>
+  `POST http://localhost:3333/delivery/id/problems`
+
+- Exemplo de requisição usando id da encomenda = 1:
+  <br>
+  `POST http://localhost:3333/delivery/1/problems`
+
+- A requisição também deve ter o seguinte campo em seu corpo:
+<pre><code>
+  {
+  	"description": "Roubo de encomenda"
+  }
+</code></pre>
+
+**Listar todos os problemas de uma encomenda:**
+
+O entregador pode ver todos os problemas já cadastrados para uma encomenda apenas informando o id dela usando a seguinte rota:
+
+- Exemplo de requisição;
+  <br>
+  `POST http://localhost:3333/delivery/id/problems`
+
+- Exemplo de requisição usando id da encomenda = 1:
+  <br>
+  `POST http://localhost:3333/delivery/1/problems`
+
+### **6. Funcionalidades da distribuidora:**
+
+Para realizar todas as operações abaixo o administrador deve enviar o seu **Bearer token** para confirmar que está autenticado no sistema.
+
+**Listar todas as entregas com algum problema**
+
+A distribuidora pode ver todas as entregas com algum problema usando a seguinte rota:
+
+- Exemplo de requisição:
+  <br>
+  `GET http://localhost:3333/delivery`
+
+**Cancelar entrega**
+
+A distribuidora pode cancelar uma entrega com apenas o ID do problema usando a seguinte rota:
+
+- Exemplo de requisição:
+  <br>
+  `DELETE http://localhost:3333/problem/id/cancel-delivery`
+
+- Exemplo de requisição usando ID do problema = 1:
+  <br>
+  `DELETE http://localhost:3333/problem/1/cancel-delivery`
+
+- Quando uma encomenda é cancelada o entregador recebe um email informando-o sobre o cancelamento.
+
+---
