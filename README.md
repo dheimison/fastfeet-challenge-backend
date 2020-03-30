@@ -2,7 +2,7 @@
   <img alt="FastFeet Logo" title="Fastfeet" src=".github/logo.png" width="300px" />
 </h1>
 
-<p>Este desafio está disponível no repositório da <a href="https://github.com/Rocketseat">RocketSeat</a>, ele basicamente consiste em criar uma aplicação completa (Back-end, Front-end e Mobile) do zero usando Node.js, ReactJS e React Native</p>
+<p>Este desafio consiste em criar uma aplicação completa (Back-end, Front-end e Mobile) do zero usando Node.js, ReactJS e React Native</p>
 
 <p align="center">
   <img alt="License" src="https://img.shields.io/badge/license-MIT-%2304D361">
@@ -12,15 +12,55 @@
 
 A aplicação é um app para uma transportadora fictícia, o FastFeet.
 
+## Executando o projeto:
+
+- Clone o projeto.
+
+- Instale o banco de dados PostgreSQL ou um container com o mesmo.
+
+- crie um perfil no banco de dados com:
+
+  - **USERNAME**: postgres
+  - **PASSWORD**: fstfeet
+
+- Crie um database com o nome: `fastfeetdb`
+
+- Na pasta do projeto clonado execute o seguinte comando:
+  <pre><code>npm install</code></pre>
+
+  OU
+  <pre><code>yarn</code></pre>
+
+- Execute as migrations no banco de dados com o seguinte comando:
+  <pre><code>npx sequelize db:migrate</code></pre>
+
+  OU
+  <pre><code>yarn sequelize db:migrate</code></pre>
+
+- Popule o banco de dados com o seguinte comando:
+  <pre><code>npx sequelize db:seed:all </code></pre>
+
+  OU
+  <pre><code>yarn sequelize db:seed:all </code></pre>
+
+- Por último inicialize o servidor com o seguinte comando:
+  <pre><code>npm run dev</code></pre>
+
+  OU
+  <pre><code>yarn dev</code></pre>
+
+- Ele estará rodando no endereço:
+  <pre><code>http://localhost:3333</code></pre>
+
 ### **Ferramentas e tecnologias usadas no backend :**
 
-- Node.js + Express;
-- Sucrase + Nodemon;
-- Sequelize;
-- PostgresSQL;
-- Bcryptjs
-- Jsonwebtoken;
-- Yup;
+- <a href="https://nodejs.org/">Node.js</a> + <a href="https://github.com/expressjs/express/">Express</a>
+- <a href="https://github.com/alangpierce/sucrase">Sucrase</a> + <a href="https://github.com/remy/nodemon">Nodemon</a>
+- <a href="https://github.com/sequelize/sequelize">Sequelize</a>
+- <a href="https://www.postgresql.org/">PostgresSQL</a>
+- <a href="https://github.com/dcodeIO/bcrypt.js">Bcryptjs</a>
+- <a href="https://github.com/auth0/node-jsonwebtoken">Jsonwebtoken</a>
+- <a href="https://github.com/jquense/yup">Yup</a>
 
 ### **Funcionalidades**
 
@@ -37,7 +77,7 @@ Abaixo estão descritas as funcionalidades contidas na aplicação.
 
 O usuário administrador pode se autenticar usando email e senha.
 
-Ao se autenticar o usuário recebe um token de acesso gerado via JSON Web Token, que será necessario para poder acessar alguma funcionalidades da aplicação.
+Ao se autenticar o usuário recebe um token de acesso gerado via JSON Web Token, que será necessario para poder acessar algumas funcionalidades da aplicação.
 
 - Rota de autenticação: `POST http://localhost:3333/sessions`
   - Exemplo de campos a serem enviados:
