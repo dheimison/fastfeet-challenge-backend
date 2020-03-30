@@ -26,6 +26,13 @@ A aplicação é um app para uma transportadora fictícia, o FastFeet.
 
 Abaixo estão descritas as funcionalidades contidas na aplicação.
 
+<a href="#1-autenticação">Autenticação</a><br>
+<a href="#2-gestão-de-destinatários">Gestão de Destinatários</a><br>
+<a href="#3-gestão-de-entregadores">Gestão de Entregadores</a><br>
+<a href="#4-gestão-de-encomendas">Gestão de Encomendas</a><br>
+<a href="#5-funcionalidades-do-entregador">Funcionalidades do entregador</a><br>
+<a href="#6-funcionalidades-da-distribuidora">Funcionalidades da distribuidora</a>
+
 ### **1. Autenticação**
 
 O usuário administrador pode se autenticar usando email e senha.
