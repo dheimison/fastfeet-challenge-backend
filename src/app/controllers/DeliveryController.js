@@ -111,12 +111,12 @@ class DeliveryController {
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      id: Yup.string().required(),
+      deliveryman_id: Yup.string().required(),
       order_id: Yup.string().required(),
     });
 
-    const { id } = req.params;
-    const { order: order_id } = req.query;
+    const { id: deliveryman_id } = req.params;
+    const { order_id } = req.body;
 
     if (!req.file) {
       return res.status(400).json({ error: 'Signature photo is required' });
@@ -135,13 +135,13 @@ class DeliveryController {
       fs.unlinkSync(filePath);
     }
 
-    if (!(await schema.isValid({ id, order_id }))) {
+    if (!(await schema.isValid({ deliveryman_id, order_id }))) {
       deleteFile();
       return res.status(400).json({ error: 'Validations fails' });
     }
 
     const order = await Order.findOne({
-      where: { id: order_id, deliveryman_id: id },
+      where: { id: order_id, deliveryman_id },
     });
 
     if (!order) {
