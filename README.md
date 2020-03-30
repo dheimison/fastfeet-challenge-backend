@@ -100,11 +100,17 @@ Administradores podem listar todos os entregadores usando a seguinte rota:
 
 **Cadastro de entregadores:**
 
-Administradores podem cadastrar novos entregadores usando a seguinte rota, o nome e o email devem ser passados via `Query params`, a foto do entregador pode ser enviado no corpo da requisição que deve ser do tipo `Multipart Form` e o nome do campo a ser enviado deve ser `file`:
+Administradores podem cadastrar novos entregadores usando a seguinte rota, a foto do entregador pode ser enviado na requisição:
 
-- Rota: `POST http://localhost:3333/deliverymen?name=NomeDoEntregador&email=email@email.com`
+- Rota: `POST http://localhost:3333/deliverymen`
 
-- O corpo da requisição dever ser do tipo `Multipart Form` e deve conter o campo `file` junto de um arquivo de imagem.
+- O corpo da requisição dever ser do tipo `Multipart Form`.
+
+- A foto do entregador deve estar contida no campo `file`.
+
+- O nome do entregador deve estar contido no campo `name`.
+
+- O email do entregador deve estar contido no campo `email`.
 
 **Atualização de entregadores:**
 
@@ -113,19 +119,17 @@ Administradores podem atualizar os dados entregadores informando o **ID** do ent
 - Rota: `PUT http://localhost:3333/deliverymen/id`
   <br>
 
-Para atualizar apenas o nome, exemplo usando id = 1:
+Exemplo usando id = 1:
 
-- Rota: `PUT http://localhost:3333/deliverymen/1?name=NomeNovo`
+- Rota: `PUT http://localhost:3333/deliverymen/1`
 
-Para atualizar apenas o email, exemplo usando id = 1:
+* O corpo da requisição dever ser do tipo `Multipart Form`.
 
-- Rota: `PUT http://localhost:3333/deliverymen/1?email=EmailNovo@email.com`
+* A foto do entregador deve estar contida no campo `file`.
 
-Para atualizar apenas a foto, exemplo usando id = 1:
+* O nome do entregador deve estar contido no campo `name`.
 
-- Rota `PUT http://localhost:3333/deliverymen/1`
-
-- O corpo da requisição dever ser do tipo `Multipart Form` e deve conter o campo `file` junto de um arquivo de imagem.
+* O email do entregador deve estar contido no campo `email`.
 
 **Deletar entregadores:**
 
@@ -258,15 +262,19 @@ O entregador pode finalizar uma entrega usando a seguinte rota:
 
 - Exemplo de requisição:
   <br>
-  `PUT http://localhost:3333/deliveries/id/conclude?order=order-id`
+  `PUT http://localhost:3333/deliveries/id/conclude`
 
-- Exemplo de requisição usando id do entregador = 1 e id da encomenda = 2:
+- Exemplo de requisição usando id do entregador = 1:
   <br>
-  `PUT http://localhost:3333/deliveries/1/conclude?order=2`
+  `PUT http://localhost:3333/deliveries/1/conclude`
 
 - O entregador deve enviar uma foto da assinatura do destinatário para comprovar que recebeu a encomenda.
 
-- A foto da assinatura vai no corpo da requisição, o corpo da requisição deve ser do tipo `Multipart Form` e o campo a ser enviado junto com a foto deve se chamar `file`.
+- O corpo da requisição dever ser do tipo `Multipart Form`.
+
+- A foto da assinatura deve estar contida no campo `file`.
+
+- O id da encomenda deve estar contido no campo `order_id`.
 
 **Cadastrar problemas na entrega:**
 
