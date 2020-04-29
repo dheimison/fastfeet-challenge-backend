@@ -30,6 +30,7 @@ routes.post('/delivery/:id/problems', DeliveryProblemController.store);
 
 routes.use(authMiddleware);
 
+routes.get('/recipients', RecipientController.show);
 routes.post('/recipients', RecipientController.store);
 routes.put('/recipients', RecipientController.update);
 
