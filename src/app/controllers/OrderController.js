@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import * as Yup from 'yup';
 import fs from 'fs';
 import { resolve } from 'path';
@@ -11,6 +12,43 @@ import Mail from '../../lib/Mail';
 
 class OrderController {
   async index(req, res) {
+    const { order } = req.query;
+
+    if (order) {
+      const Orders = await Order.findAll({
+        where: {
+          product: { [Op.iLike]: order },
+        },
+        attributes: [
+          'id',
+          'product',
+          'canceled_at',
+          'start_date',
+          'end_date',
+          'signature_id',
+        ],
+        include: [
+          {
+            model: Deliveryman,
+            as: 'deliveryman',
+            attributes: ['id', 'name', 'email', 'avatar_id'],
+          },
+          {
+            model: Recipient,
+            as: 'recipient',
+            attributes: ['id', 'name'],
+          },
+          {
+            model: File,
+            as: 'signature',
+            attributes: ['name', 'path'],
+          },
+        ],
+      });
+
+      return res.status(200).json(Orders);
+    }
+
     const Orders = await Order.findAll({
       attributes: [
         'id',
