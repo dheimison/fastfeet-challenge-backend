@@ -128,6 +128,14 @@ O destinatário não pode se autenticar no sistema.
 
   Obs.2: Para atualizar o nome do destinatário adicione um campo chamado `newName`.
 
+- Rota para listagem de todos os destinatários: `GET http://localhost:3333/recipients`
+
+  - Retorna um array de objetos contendo os usuários.
+
+- Rota para listagem de um destinatário específico: `GET http://localhost:3333/recipients?name=nomeDoDestinatario`
+
+  - Retorna um array com um objeto contendo o usuário caso ele seja encontrado no banco de dados.
+
 ### **3. Gestão de Entregadores**
 
 Para realizar todas as operações abaixo o administrador deve enviar o seu **Bearer token** para confirmar que está autenticado no sistema.
@@ -137,6 +145,10 @@ Para realizar todas as operações abaixo o administrador deve enviar o seu **Be
 Administradores podem listar todos os entregadores usando a seguinte rota:
 
 - `GET http://localhost:3333/deliverymen`
+
+Administradores podem listar um entregador específico passando o nome do mesmo via `query parameter` usando a seguinte rota:
+
+- `GET http://localhost:3333/deliverymen?name=nomeDoEntregador`
 
 **Cadastro de entregadores:**
 
@@ -192,6 +204,12 @@ Administradores podem listar todas as encomendas usando a seguinte rota:
 - Rota: `GET http://localhost:3333/orders`
 
 - Ela retornará um array de encomendas.
+
+Administradores podem listar encomendas especificas apenas informando o nome da mesma via `query parameter` usando a seguinte rota:
+
+- Rota: `GET http://localhost:3333/orders?order=nomeDaEncomenda`
+
+- Ela retornará um array com a encomenda.
 
 **Cadastro de encomendas:**
 
