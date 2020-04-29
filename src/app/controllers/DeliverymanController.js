@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import * as Yup from 'yup';
 import fs from 'fs';
 import { resolve } from 'path';
@@ -7,6 +8,26 @@ import File from '../models/File';
 
 class DeliverymanController {
   async index(req, res) {
+    const { name } = req.query;
+
+    if (name) {
+      const deliveryman = await Deliveryman.findAll({
+        where: {
+          name: { [Op.iLike]: name },
+        },
+        attributes: ['id', 'name', 'email', 'avatar_id'],
+        include: [
+          {
+            model: File,
+            as: 'avatar',
+            attributes: ['name', 'path', 'url'],
+          },
+        ],
+      });
+
+      return res.status(200).json(deliveryman);
+    }
+
     const deliverymen = await Deliveryman.findAll({
       attributes: ['id', 'name', 'email', 'avatar_id'],
       include: [
