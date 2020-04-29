@@ -16,7 +16,7 @@ A aplicação é um app para uma transportadora fictícia, o FastFeet.
 
 - Clone o projeto.
 
-- Instale o banco de dados PostgreSQL ou um container com o mesmo.
+- Instale o banco de dados PostgreSQL ou um container docker com o mesmo.
 
 - crie um perfil no banco de dados com:
 
