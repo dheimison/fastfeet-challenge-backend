@@ -36,7 +36,7 @@ class OrderController {
           {
             model: Recipient,
             as: 'recipient',
-            attributes: ['id', 'name'],
+            attributes: ['id', 'name', 'state', 'city'],
           },
           {
             model: File,
@@ -67,7 +67,7 @@ class OrderController {
         {
           model: Recipient,
           as: 'recipient',
-          attributes: ['id', 'name'],
+          attributes: ['id', 'name', 'state', 'city'],
         },
         {
           model: File,
