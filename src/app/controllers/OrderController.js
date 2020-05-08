@@ -36,12 +36,20 @@ class OrderController {
           {
             model: Recipient,
             as: 'recipient',
-            attributes: ['id', 'name', 'state', 'city'],
+            attributes: [
+              'id',
+              'name',
+              'state',
+              'city',
+              'street',
+              'number',
+              'cep',
+            ],
           },
           {
             model: File,
             as: 'signature',
-            attributes: ['name', 'path'],
+            attributes: ['name', 'path', 'url'],
           },
         ],
       });
@@ -67,12 +75,20 @@ class OrderController {
         {
           model: Recipient,
           as: 'recipient',
-          attributes: ['id', 'name', 'state', 'city'],
+          attributes: [
+            'id',
+            'name',
+            'state',
+            'city',
+            'street',
+            'number',
+            'cep',
+          ],
         },
         {
           model: File,
           as: 'signature',
-          attributes: ['name', 'path'],
+          attributes: ['name', 'path', 'url'],
         },
       ],
     });
