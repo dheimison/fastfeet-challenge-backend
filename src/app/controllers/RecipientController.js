@@ -9,7 +9,7 @@ class RecipientController {
     if (name) {
       const recipient = await Recipient.findAll({
         where: {
-          name: { [Op.iLike]: name },
+          name: { [Op.iLike]: `%${name}%` },
         },
         attributes: [
           'id',

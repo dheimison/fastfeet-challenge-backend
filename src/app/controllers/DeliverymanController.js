@@ -13,7 +13,7 @@ class DeliverymanController {
     if (name) {
       const deliveryman = await Deliveryman.findAll({
         where: {
-          name: { [Op.iLike]: name },
+          name: { [Op.iLike]: `%${name}%` },
         },
         attributes: ['id', 'name', 'email', 'avatar_id'],
         include: [
