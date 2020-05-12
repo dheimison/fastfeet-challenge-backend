@@ -11,6 +11,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: { model: 'orders', key: 'id' },
         allowNull: false,
+        onDelete: 'CASCADE',
       },
       description: {
         type: Sequelize.STRING,
